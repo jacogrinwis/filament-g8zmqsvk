@@ -32,6 +32,16 @@ class PostsTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+                TextColumn::make('categories.name')
+                    ->badge()
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('tags.name')
+                    ->badge()
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
                     ->formatStateUsing(fn($state) => $state->label())
                     ->color(fn($state) => $state->color())

@@ -43,8 +43,18 @@ class Post extends Model
         return $this->belongsToMany(PostCategory::class);
     }
 
+    public function activeCategories()
+    {
+        return $this->belongsToMany(PostCategory::class)->where('is_active', true);
+    }
+
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(PostTag::class);
+    }
+
+    public function activeTags()
+    {
+        return $this->belongsToMany(PostTag::class)->where('is_active', true);
     }
 }

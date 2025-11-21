@@ -6,6 +6,7 @@ use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 
 class PostCategoriesTable
@@ -30,6 +31,10 @@ class PostCategoriesTable
                     ->counts('posts')
                     ->badge()
                     ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                IconColumn::make('is_active')
+                    ->boolean()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('created_at')

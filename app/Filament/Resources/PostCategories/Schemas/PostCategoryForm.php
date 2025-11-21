@@ -4,6 +4,7 @@ namespace App\Filament\Resources\PostCategories\Schemas;
 
 use Illuminate\Support\Str;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Toggle;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Get;
@@ -35,6 +36,9 @@ class PostCategoryForm
                     ->required(),
                 TextInput::make('description')
                     ->nullable(),
+                Toggle::make('is_active')
+                    ->label('Active')
+                    ->default(true),
             ]);
     }
 }

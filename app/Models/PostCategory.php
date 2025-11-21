@@ -10,7 +10,11 @@ class PostCategory extends Model
     /** @use HasFactory<\Database\Factories\PostCategoryFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description'];
+    protected $fillable = ['name', 'slug', 'description', 'is_active'];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
 
     public function posts()
     {

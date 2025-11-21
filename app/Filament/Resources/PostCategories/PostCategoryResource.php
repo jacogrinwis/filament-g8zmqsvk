@@ -2,17 +2,18 @@
 
 namespace App\Filament\Resources\PostCategories;
 
-use App\Filament\Resources\PostCategories\Pages\CreatePostCategory;
+use BackedEnum;
+use Filament\Tables\Table;
+use App\Models\PostCategory;
+use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PostCategories\Pages\EditPostCategory;
+use App\Filament\Resources\PostCategories\Pages\CreatePostCategory;
 use App\Filament\Resources\PostCategories\Pages\ListPostCategories;
 use App\Filament\Resources\PostCategories\Schemas\PostCategoryForm;
 use App\Filament\Resources\PostCategories\Tables\PostCategoriesTable;
-use App\Models\PostCategory;
-use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class PostCategoryResource extends Resource
 {
@@ -21,6 +22,11 @@ class PostCategoryResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'PostCategory';
+
+    // public static function getEloquentQuery(): Builder
+    // {
+    //     return parent::getEloquentQuery()->where('is_active', true);
+    // }
 
     public static function form(Schema $schema): Schema
     {

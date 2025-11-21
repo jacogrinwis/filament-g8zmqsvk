@@ -8,11 +8,12 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class PostsTable
 {
@@ -36,12 +37,14 @@ class PostsTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('categories.name')
+                TextColumn::make('activeCategories.name')
+                    ->label('Categories')
                     ->badge()
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('tags.name')
+                TextColumn::make('activeTags.name')
+                    ->label('Tags')
                     ->badge()
                     ->searchable()
                     ->sortable()

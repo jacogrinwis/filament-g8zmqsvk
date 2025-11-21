@@ -10,7 +10,11 @@ class PostTag extends Model
     /** @use HasFactory<\Database\Factories\PostTagFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['name', 'slug', 'is_active'];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
 
     public function posts()
     {

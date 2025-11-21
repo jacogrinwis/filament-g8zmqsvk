@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Post;
 use App\Models\User;
 use App\Enums\UserRole;
+use App\Models\PostCategory;
 use Illuminate\Auth\Access\Response;
 
-class PostPolicy
+class PostCategoryPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -24,13 +24,13 @@ class PostPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Post $post): bool
+    public function view(User $user, PostCategory $post_category): bool
     {
         if ($user->role === UserRole::Admin) return true;
         if ($user->role === UserRole::Editor) return true;
 
         // owners mogen hun eigen posts zien
-        return $post->user_id === $user->id;
+        return $post_category->user_id === $user->id;
     }
 
     /**
@@ -47,7 +47,7 @@ class PostPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Post $post): bool
+    public function update(User $user, PostCategory $post_category): bool
     {
         if ($user->role === UserRole::Admin) return true;
 
@@ -56,7 +56,7 @@ class PostPolicy
         }
 
         // gewone user mag alleen eigen posts wijzigen
-        return $post->user_id === $user->id;
+        return $post_category->user_id === $user->id;
     }
 
     public function updateAny(User $user): bool
@@ -70,13 +70,13 @@ class PostPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Post $post): bool
+    public function delete(User $user, PostCategory $post_category): bool
     {
         if ($user->role === UserRole::Admin) return true;
 
         // editors mogen NIET verwijderen
         // users mogen alleen eigen posten verwijderen
-        return $post->user_id === $user->id;
+        return $post_category->user_id === $user->id;
     }
 
     public function deleteAny(User $user): bool
@@ -87,7 +87,7 @@ class PostPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Post $post): bool
+    public function restore(User $user, PostCategory $post_category): bool
     {
         return $user->role === UserRole::Admin;
     }
@@ -100,7 +100,7 @@ class PostPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Post $post): bool
+    public function forceDelete(User $user, PostCategory $post_category): bool
     {
         return $user->role === UserRole::Admin;
     }

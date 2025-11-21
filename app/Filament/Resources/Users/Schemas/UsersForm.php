@@ -41,12 +41,9 @@ class UsersForm
                     ->required(fn(string $context): bool => $context === 'create')
                     ->maxLength(255),
                 Radio::make('role')
-                    ->options([
-                        'user' => 'User',
-                        'editor' => 'Editor',
-                        'admin' => 'Admin',
-                    ])
+                    ->options(UserRole::labels())
                     ->default('user')
+                    // ->inline()
                     ->required(),
                 Toggle::make('is_active')
                     ->label('Active')

@@ -17,6 +17,15 @@ enum UserRole: string
         };
     }
 
+    public static function labels(): array
+    {
+        $out = [];
+        foreach (self::cases() as $case) {
+            $out[$case->value] = $case->label();
+        }
+        return $out;
+    }
+
     public function color(): string
     {
         return match ($this) {

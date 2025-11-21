@@ -39,10 +39,18 @@ class UsersForm
                     ->password()
                     ->required(fn(string $context): bool => $context === 'create')
                     ->maxLength(255),
+                // Select::make('role')
+                //     ->options(UserRole::cases())
+                //     ->enum(UserRole::class)
+                //     ->default(UserRole::User)
+                //     ->required(),
                 Select::make('role')
-                    ->options(UserRole::cases())
-                    ->enum(UserRole::class)
-                    ->default(UserRole::User)
+                    ->options([
+                        'user' => 'User',
+                        'editor' => 'Editor',
+                        'admin' => 'Admin',
+                    ])
+                    ->default('user')
                     ->required(),
                 Toggle::make('is_active')
                     ->label('Active')

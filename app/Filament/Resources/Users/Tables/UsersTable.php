@@ -15,11 +15,12 @@ class UsersTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')->label('Name')
+                TextColumn::make('name')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('email')->label('Email')
+                TextColumn::make('email')
+                    ->label('Email Address')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),

@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\Posts\Tables;
 
+use Filament\Tables\Table;
+use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
 
 class PostsTable
 {
@@ -23,6 +23,10 @@ class PostsTable
                     ->searchable(),
                 TextColumn::make('author.name')
                     ->searchable(),
+                TextColumn::make('status')
+                    ->formatStateUsing(fn($state) => $state->label())
+                    ->color(fn($state) => $state->color())
+                    ->badge(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

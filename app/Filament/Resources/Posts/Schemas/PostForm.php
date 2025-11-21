@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use App\Enums\PostStatus;
 use Illuminate\Support\Str;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
@@ -32,6 +33,11 @@ class PostForm
                     ->disabled(fn($operation) => $operation === 'edit')
                     ->required()
                     ->searchable(),
+                Select::make('status')
+                    ->options(PostStatus::class)
+                    ->enum(PostStatus::class)
+                    ->default(PostStatus::Draft)
+                    ->required(),
                 TextInput::make('title')
                     ->live()
                     ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state)))

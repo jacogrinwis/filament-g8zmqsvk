@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PostStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,11 @@ class Post extends Model
         'slug',
         'excerpt',
         'content',
+        'status',
+    ];
+
+    protected $casts = [
+        'status' => PostStatus::class,
     ];
 
     public function user(): BelongsTo

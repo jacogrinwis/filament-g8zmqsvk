@@ -6,6 +6,7 @@ use App\Enums\PostStatus;
 use Illuminate\Support\Str;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
@@ -38,6 +39,9 @@ class PostForm
                     ->enum(PostStatus::class)
                     ->default(PostStatus::Draft)
                     ->required(),
+                Toggle::make('is_featured')
+                    ->label('Featured')
+                    ->default(false),
                 TextInput::make('title')
                     ->live()
                     ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state)))

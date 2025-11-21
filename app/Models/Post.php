@@ -20,10 +20,12 @@ class Post extends Model
         'excerpt',
         'content',
         'status',
+        'is_featured',
     ];
 
     protected $casts = [
         'status' => PostStatus::class,
+        'is_featured' => 'boolean',
     ];
 
     public function user(): BelongsTo

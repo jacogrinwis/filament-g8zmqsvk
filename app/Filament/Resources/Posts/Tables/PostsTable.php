@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Posts\Tables;
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Forms\Components\Toggle;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 
 class PostsTable
@@ -14,19 +16,32 @@ class PostsTable
     {
         return $table
             ->columns([
-                // TextColumn::make('user_id')
-                //     ->numeric()
-                //     ->sortable(),
                 TextColumn::make('title')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('views')
+                    ->badge()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('author.name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('status')
                     ->formatStateUsing(fn($state) => $state->label())
                     ->color(fn($state) => $state->color())
-                    ->badge(),
+                    ->badge()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                IconColumn::make('is_featured')
+                    ->boolean()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

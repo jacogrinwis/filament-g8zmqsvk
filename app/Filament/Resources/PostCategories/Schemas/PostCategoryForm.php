@@ -17,18 +17,19 @@ class PostCategoryForm
             ->components([
                 TextInput::make('name')
                     ->live()
-                    ->afterStateUpdated(function (Get $get, Set $set, ?string $operation, ?string $old, ?string $state, ?Model $record) {
+                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state)))
+                    // ->afterStateUpdated(function (Get $get, Set $set, ?string $operation, ?string $old, ?string $state, ?Model $record) {
 
-                        if ($operation == 'edit' && $record->isPublished()) {
-                            return;
-                        }
+                    //     if ($operation == 'edit' && $record->isPublished()) {
+                    //         return;
+                    //     }
 
-                        if (($get('slug') ?? '') !== Str::slug($old)) {
-                            return;
-                        }
+                    //     if (($get('slug') ?? '') !== Str::slug($old)) {
+                    //         return;
+                    //     }
 
-                        $set('slug', Str::slug($state));
-                    })
+                    //     $set('slug', Str::slug($state));
+                    // })
                     ->required(),
                 TextInput::make('slug')
                     ->required(),

@@ -69,11 +69,17 @@ class PostsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                // SelectFilter::make('user')
+                //     ->label('Auteur')
+                //     ->relationship('user', 'name', fn($query) => $query->where('is_active', true)),
+                SelectFilter::make('user')
+                    ->label('Auteur')
+                    ->multiple() // kies meerdere auteurs tegelijk
+                    ->relationship('user', 'name'),
                 SelectFilter::make('category')
                     ->label('Categorie')
                     ->multiple()
                     ->relationship('categories', 'name'),
-
                 SelectFilter::make('tags')
                     ->label('Tags')
                     ->multiple()

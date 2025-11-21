@@ -24,6 +24,10 @@ class UsersTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+                TextColumn::make('role')
+                    ->badge()
+                    ->formatStateUsing(fn($state) => $state->label())
+                    ->color(fn($state) => $state->color()),
                 IconColumn::make('is_active')
                     ->boolean()
                     ->sortable()

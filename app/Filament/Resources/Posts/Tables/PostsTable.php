@@ -2,13 +2,17 @@
 
 namespace App\Filament\Resources\Posts\Tables;
 
+use App\Enums\PostStatus;
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
+use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
-use Filament\Forms\Components\Toggle;
 use Filament\Actions\DeleteBulkAction;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\SelectFilter;
 
 class PostsTable
 {
@@ -62,7 +66,45 @@ class PostsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('category')
+                    ->label('Categorie')
+                    ->multiple()
+                    ->relationship('categories', 'name'),
+
+                SelectFilter::make('tags')
+                    ->label('Tags')
+                    ->multiple()
+                    ->relationship('tags', 'name'),
+                SelectFilter::make('status')
+                    ->multiple()
+                    ->options(
+                        collect(PostStatus::cases())
+                            ->mapWithKeys(fn($s) => [$s->value => $s->label()])
+                            ->toArray()
+                    ),
+                Filter::make('is_featured')
+                    ->query(fn($query, $state) => $query->where('is_featured', $state))
+                    ->toggle(),
+                Filter::make('created_at')
+                    ->label('Aangemaakt tussen')
+                    ->schema([
+                        DatePicker::make('created_from')
+                            ->label('Start datum'),
+
+                        DatePicker::make('created_until')
+                            ->label('Eind datum'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    }),
             ])
             ->recordActions([
                 EditAction::make(),

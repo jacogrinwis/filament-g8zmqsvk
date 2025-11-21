@@ -22,6 +22,8 @@ class PostTagResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'PostTag';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Schema $schema): Schema
     {
         return PostTagForm::configure($schema);
@@ -30,6 +32,16 @@ class PostTagResource extends Resource
     public static function table(Table $table): Table
     {
         return PostTagsTable::configure($table);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'The number of Post Tags';
     }
 
     public static function getRelations(): array

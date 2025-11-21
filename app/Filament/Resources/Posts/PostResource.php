@@ -22,6 +22,8 @@ class PostResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Post';
 
+    protected static ?int $navigationSort = 1;
+
     public static function form(Schema $schema): Schema
     {
         return PostForm::configure($schema);
@@ -30,6 +32,16 @@ class PostResource extends Resource
     public static function table(Table $table): Table
     {
         return PostsTable::configure($table);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'The number of Posts';
     }
 
     public static function getRelations(): array

@@ -23,6 +23,8 @@ class PostCategoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'PostCategory';
 
+    protected static ?int $navigationSort = 2;
+
     // public static function getEloquentQuery(): Builder
     // {
     //     return parent::getEloquentQuery()->where('is_active', true);
@@ -36,6 +38,16 @@ class PostCategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return PostCategoriesTable::configure($table);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'The number of Post Categories';
     }
 
     public static function getRelations(): array

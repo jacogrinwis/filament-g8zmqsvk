@@ -22,6 +22,8 @@ class UsersResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'User';
 
+    protected static ?int $navigationSort = 4;
+
     public static function form(Schema $schema): Schema
     {
         return UsersForm::configure($schema);
@@ -30,6 +32,16 @@ class UsersResource extends Resource
     public static function table(Table $table): Table
     {
         return UsersTable::configure($table);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'The number of Users';
     }
 
     public static function getRelations(): array

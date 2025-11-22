@@ -11,7 +11,6 @@ use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
@@ -24,68 +23,91 @@ class PostsTable
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->html()
+                    ->formatStateUsing(
+                        fn($state, $record) =>
+                        $record->user?->is_active
+                            ? $state
+                            : "<span style='text-decoration: line-through; opacity: 0.4;'>$state</span>"
+                    )
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+
                 TextColumn::make('slug')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('views')
                     ->badge()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+
                 TextColumn::make('author.name')
+                    ->html()
+                    ->formatStateUsing(
+                        fn($state, $record) =>
+                        $record->user?->is_active
+                            ? $state
+                            : "<span style='text-decoration: line-through; opacity: 0.4;'>$state</span>"
+                    )
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+
                 TextColumn::make('activeCategories.name')
                     ->label('Categories')
                     ->badge()
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('activeTags.name')
                     ->label('Tags')
                     ->badge()
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('status')
                     ->formatStateUsing(fn($state) => $state->label())
                     ->color(fn($state) => $state->color())
                     ->badge()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+
                 IconColumn::make('is_featured')
                     ->boolean()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                // SelectFilter::make('user')
-                //     ->label('Auteur')
-                //     ->relationship('user', 'name', fn($query) => $query->where('is_active', true)),
                 SelectFilter::make('user')
                     ->label('Auteur')
-                    ->multiple() // kies meerdere auteurs tegelijk
+                    ->multiple()
                     ->relationship('user', 'name'),
+
                 SelectFilter::make('category')
                     ->label('Categorie')
                     ->multiple()
                     ->relationship('categories', 'name'),
+
                 SelectFilter::make('tags')
                     ->label('Tags')
                     ->multiple()
                     ->relationship('tags', 'name'),
+
                 SelectFilter::make('status')
                     ->multiple()
                     ->options(
@@ -93,9 +115,11 @@ class PostsTable
                             ->mapWithKeys(fn($s) => [$s->value => $s->label()])
                             ->toArray()
                     ),
+
                 Filter::make('is_featured')
                     ->query(fn($query, $state) => $query->where('is_featured', $state))
                     ->toggle(),
+
                 Filter::make('created_at')
                     ->label('Aangemaakt tussen')
                     ->schema([

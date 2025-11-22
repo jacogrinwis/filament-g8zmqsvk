@@ -28,6 +28,15 @@ class Post extends Model
         'is_featured' => 'boolean',
     ];
 
+    // protected static function booted()
+    // {
+    //     static::addGlobalScope('activeAuthors', function ($query) {
+    //         $query->whereHas('user', function ($q) {
+    //             $q->where('is_active', true);
+    //         });
+    //     });
+    // }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

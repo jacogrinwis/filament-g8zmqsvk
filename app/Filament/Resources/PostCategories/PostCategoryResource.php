@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PostCategories;
 
+use UnitEnum;
 use BackedEnum;
 use Filament\Tables\Table;
 use App\Models\PostCategory;
@@ -19,6 +20,8 @@ class PostCategoryResource extends Resource
 {
     protected static ?string $model = PostCategory::class;
 
+    protected static string | UnitEnum | null $navigationGroup = 'Blog';
+    protected static ?string $navigationLabel = 'Categories';
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'PostCategory';

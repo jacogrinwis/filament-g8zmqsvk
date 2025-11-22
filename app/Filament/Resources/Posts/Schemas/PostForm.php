@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use App\Enums\UserRole;
 use App\Enums\PostStatus;
 use Illuminate\Support\Str;
 use Filament\Schemas\Schema;
@@ -32,7 +33,7 @@ class PostForm
                 Select::make('user_id')
                     ->relationship('user', 'name')
                     ->default(auth()->id())
-                    ->disabled(fn($operation) => $operation === 'edit')
+                    ->disabled(fn() => auth()->user()->role !== UserRole::Admin)
                     ->preload()
                     ->required()
                     ->searchable(),

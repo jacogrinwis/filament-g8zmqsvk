@@ -8,7 +8,6 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
 use Filament\Tables\Filters\Filter;
-use App\Helpers\TableStyles;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Support\Enums\FontWeight;

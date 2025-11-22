@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePostTag extends CreateRecord
 {
     protected static string $resource = PostTagResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

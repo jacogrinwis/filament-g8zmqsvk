@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use Filament\Tables\Table;
-use App\Helpers\TableStyles;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;

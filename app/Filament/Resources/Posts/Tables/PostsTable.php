@@ -8,12 +8,12 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
 use Filament\Tables\Filters\Filter;
+use App\Helpers\TableStyles;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ViewColumn;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,65 +23,37 @@ class PostsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordClasses(fn($record) => $record->user->is_active ? '' : 'inactive-row')
             ->columns([
                 TextColumn::make('title')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25 line-through text-gray-400',
-                    ])
+                    ->weight(FontWeight::Medium)
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('slug')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25 line-through text-gray-400',
-                    ])
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('views')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25 line-through',
-                    ])
                     ->badge()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('author.name')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25 line-through text-gray-400',
-                    ])
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('activeCategories.name')
                     ->label('Categories')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25 line-through text-gray-400',
-                    ])
                     ->badge()
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('activeTags.name')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25',
-                    ])
                     ->label('Tags')
                     ->badge()
                     ->searchable()
@@ -89,11 +61,6 @@ class PostsTable
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('status')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25',
-                    ])
                     ->formatStateUsing(fn($state) => $state->label())
                     ->color(fn($state) => $state->color())
                     ->badge()
@@ -101,40 +68,20 @@ class PostsTable
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 IconColumn::make('is_featured')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25',
-                    ])
                     ->boolean()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('created_at')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25',
-                    ])
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
-                    ->extraAttributes(fn($record) => [
-                        'class' => $record->user?->is_active
-                            ? ''
-                            : 'opacity-25',
-                    ])
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->recordClasses(
-                fn($record) => $record->user?->is_active
-                    ? ''
-                    : 'bg-gray-50 dark:bg-gray-800'
-            )
             ->filters([
                 SelectFilter::make('user')
                     ->label('Auteur')

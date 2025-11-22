@@ -11,6 +11,8 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 
@@ -59,8 +61,16 @@ class PostForm
                 Textarea::make('excerpt')
                     ->columnSpanFull(),
 
-                Textarea::make('content')
+                MarkdownEditor::make('content')
                     ->required()
+                    ->columnSpanFull(),
+
+                FileUpload::make('thumbnail')
+                    ->image()
+                    ->directory('posts')
+                    ->required(false)
+                    ->imageEditor()
+                    ->maxSize(2048)
                     ->columnSpanFull(),
             ]);
     }

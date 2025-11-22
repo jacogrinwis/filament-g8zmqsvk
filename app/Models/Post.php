@@ -21,6 +21,7 @@ class Post extends Model
         'content',
         'status',
         'is_featured',
+        'thumbnail',
     ];
 
     protected $casts = [
